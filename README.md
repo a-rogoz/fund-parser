@@ -4,6 +4,7 @@
 - python -m venv .venv
 - Activate the virtual environment
 - pip install -r requirements.txt
+- pip install python-magic-bin==0.4.14
 
 - python manage.py migrate
 - python manage.py runserver
