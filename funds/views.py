@@ -19,7 +19,7 @@ def home(request: HttpRequest) -> HttpResponse:
 
 def funds(request: HttpRequest) -> HttpResponse:
     """
-    Renders the funds page with a list of all Funds.
+    Renders the Funds page with a list of all Funds.
     """
 
     funds = Fund.objects.all()
