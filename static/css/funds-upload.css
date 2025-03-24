@@ -1,0 +1,26 @@
+form {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+form div {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+button[type=submit] {
+    border: none;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    background-color: var(--background);
+}
+button[type=submit]:hover {
+    text-decoration: underline;
+}

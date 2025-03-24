@@ -1,0 +1,112 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block head %}
+<title>Funds</title>
+<meta name="title" content="Funds">
+<meta name="description" content="Page Description">
+<link rel="preload" as="style" defer href="{% static 'css/funds.min.css' %}?v=1.2025_03_23.01">
+<link rel="stylesheet" defer href="{% static 'css/funds.min.css' %}?v=1.2025_03_23.01">
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>Funds</h1>
+        <p>Funds in the database.</p>
+        {% if num_of_funds == 0 %}
+        <p class="no-funds">No Funds</p>
+        {% else %}
+        <div class="filters">
+            <label for="js-strategy-filter">Select Strategy:</label>
+            <select name="js-strategy-filter" id="js-strategy-filter">
+                <option value="">All</option>
+                {% for value, label in strategy_choices %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="fund-data">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Strategy</th>
+                        <th>AUM (USD)</th>
+                        <th>Inception Data</th>
+                    </tr>
+                </thead>
+                <tbody id="js-table-body">
+                    {% for fund in funds %}
+                    <tr>
+                        <td>{{ fund.name }}</td>
+                        <td>{{ fund.strategy }}</td>
+                        <td>{{ fund.aum }}</td>
+                        <td>{{ fund.inception_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total number of Funds:</td>
+                        <td id="js-num-of-funds">{{ num_of_funds }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sum of all Fund AUM values:</td>
+                        <td id="js-total-aum">{{ total_aum }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+    document.getElementById("js-strategy-filter").addEventListener("change", async function () {
+        // Update the table body.
+        const tableBodyEl = document.getElementById("js-table-body");
+        tableBodyEl.innerHTML = "";
+
+        // API URL.
+        const API_URL = "http://127.0.0.1:8000/api/v1/funds/";
+        let filterParams = this.value ? `?strategy=${encodeURIComponent(this.value)}` : "";
+
+        try {
+            // Fetch Funds from the API.
+            const res = await fetch(`${API_URL}${filterParams}`);
+
+            if (!res.ok) {
+                throw new Error(`HTTP error: ${res.status}`);
+            }
+
+            const resJson = await res.json();
+
+            let newTotalAum = 0;
+
+            // Iterate over the results and update the table.
+            resJson.map((fund) => {
+                const tableRow = document.createElement("tr");
+                tableRow.innerHTML = `
+                    <td>${fund.name}</td>
+                    <td>${fund.strategy}</td>
+                    <td>${fund.aum ?? "-"}</td>
+                    <td>${fund.inception_date ?? "-"}</td>
+                `;
+                tableBodyEl.appendChild(tableRow);
+
+                // Check if aum is a valid number.
+                newTotalAum += fund.aum ? parseInt(fund.aum, 10) : 0;
+            });
+
+            // Update number of Funds.
+            document.getElementById("js-num-of-funds").innerText = resJson.length;
+
+            // Update total AUM.
+            document.getElementById("js-total-aum").innerText = newTotalAum;
+        } catch (error) {
+            console.error("Error fetching Fund data:", error);
+        }
+    });
+</script>
+{% endblock %}

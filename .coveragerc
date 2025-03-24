@@ -1,0 +1,17 @@
+[run]
+omit =
+    *.venv/*
+    *__init__.py*
+    *admin.py*
+    *urls.py*
+    */migrations/*
+    tests.py
+
+[report]
+omit =
+    *.venv/*
+    *__init__.py*
+    *admin.py*
+    *urls.py*
+    */migrations/*
+    tests.py

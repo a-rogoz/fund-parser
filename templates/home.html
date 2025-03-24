@@ -1,0 +1,31 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block head %}
+<title>Home</title>
+<meta name="title" content="Home">
+<meta name="description" content="Page Description">
+<link rel="preload" as="style" defer href="{% static 'css/home.min.css' %}?v=1.2025_03_23.01">
+<link rel="stylesheet" defer href="{% static 'css/home.min.css' %}?v=1.2025_03_23.01">
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>Fund Parser</h1>
+        <p>Upload and view Fund data.</p>
+
+        <div class="page-list">
+            <div class="page-list__item">
+                <a href="/funds">View all Funds</a>
+            </div>
+            <div class="page-list__item">
+                <a href="/funds/upload">Upload Fund data</a>
+            </div>
+            <div class="page-list__item">
+                <a href="/api/v1/funds/">API Fund List</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

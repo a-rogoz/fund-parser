@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preload" as="style" defer href="{% static 'css/layout/base.min.css' %}?v=1.2025_03_23.01">
+        <link rel="stylesheet" defer href="{% static 'css/layout/base.min.css' %}?v=1.2025_03_23.01">
+        <link rel="preload" as="style" defer href="{% static 'css/layout/navbar.min.css' %}?v=1.2025_03_23.01">
+        <link rel="stylesheet" defer href="{% static 'css/layout/navbar.min.css' %}?v=1.2025_03_23.01">
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        {% include "layout/navbar.html" %}
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+.page-list {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.page-list__item {
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: var(--background);
+}
+
+@media all and (min-width: 577px) {
+    .page-list {
+        flex-flow: row wrap;
+    }
+}
