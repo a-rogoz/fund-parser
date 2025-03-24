@@ -11,7 +11,7 @@ from .utils import process_fund_csv
 
 def home(request: HttpRequest) -> HttpResponse:
     """
-    Render the home page.
+    Renders the home page.
     """
 
     return render(request, "home.html")
@@ -19,11 +19,11 @@ def home(request: HttpRequest) -> HttpResponse:
 
 def funds(request: HttpRequest) -> HttpResponse:
     """
-    Render the funds page with a list of all Funds.
+    Renders the funds page with a list of all Funds.
     """
 
     funds = Fund.objects.all()
-    fund_data = Fund.objects.aggregate(
+    fund_data = funds.aggregate(
         total_aum=Sum("aum"),
         num_of_funds=Sum(1)
     )
