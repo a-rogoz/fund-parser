@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.db.models import Sum
+from django.db.models import Count, Sum
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import redirect, render
 from django.views.generic import View
@@ -25,7 +25,7 @@ def funds(request: HttpRequest) -> HttpResponse:
     funds = Fund.objects.all()
     fund_data = funds.aggregate(
         total_aum=Sum("aum"),
-        num_of_funds=Sum(1)
+        num_of_funds=Count("id")
     )
 
     return render(request, "funds.html", {
